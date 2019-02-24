@@ -1,10 +1,8 @@
 
 
             // Things to completed //
-        // 1) make the game reset after a win or loss auto
-        // 2) dont allow the user to guess the same letter more then once.
-
-
+        // 1) dont allow the user to guess the same letter more then once.
+        
 // possible options for the user to pick from
 var letterOptions = ["a", "b", "c", "d", "e", "f", "g", "h", "I", "j", "k", "l", "m",
                     "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
@@ -25,31 +23,33 @@ var lossesText = document.getElementById("losses");
 var remainingText = document.getElementById("remainingGuess");
 var guessesText = document.getElementById("guesses-already");
 
+var randomLetter = Math.floor(Math.random() * letterOptions.length);
+var randomOption = letterOptions[randomLetter];
+
+
 
 // a function we will create that will reset the game as well as store the data that is needed for the game to run before the user
 // touches a key
 function startGame() {
 
+randomLetter = Math.floor(Math.random() * letterOptions.length);
+randomOption = letterOptions[randomLetter];
+
+console.log(randomOption);
+
 remaining = 9;
 lettersGuessed = [];
+randomLetter;
 
-}
 
-// Getting a random Letter from LetterOptions [Array] //
-var randomLetter = Math.floor(Math.random() * letterOptions.length);
-
-// storing the random letter in randomOption //
-var randomOption = letterOptions[randomLetter];
-
-//console.log is just showing us what the random letter is
-console.log(randomOption);
 
 // the text that will display before the user takes their first guess
 winsText.textContent = "Wins: " + wins;
 lossesText.textContent = "Losses: " + losses;
 remainingText.textContent = "Remaining: " + remaining;
+}
 
-
+startGame()
 // the function that will run when the user lets their finger off a key
 document.onkeyup = function(event) {
 
@@ -65,13 +65,14 @@ document.onkeyup = function(event) {
         // run the below code if the usersGuess is already been guessed
            lettersGuessed.push(userGuess)
        }
- 
+
     
        if (randomOption.includes(userGuess)) {
 
-           wins ++;
+           wins++;
             console.log("You Win");
-
+            startGame();
+        
        } else {
            remaining--;
            console.log("try again");
@@ -79,12 +80,9 @@ document.onkeyup = function(event) {
       
         // this makes the losses go up after remaining hits 0
         if (remaining <= 0) {
-        losses++
-        console.log("you lost")
-        }
-
-        if (userGuess === randomOption) {
-            wins++
+        losses++;
+        console.log("you lost");
+        startGame();
         }
        
         winsText.textContent = "Wins: " + wins; 
