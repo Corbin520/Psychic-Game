@@ -1,27 +1,19 @@
 
 
-                    // Steps to complete the game //
-// the point of this game is to guess the letter that is randomly placed into the console.
-    // if the letter that is in the console gets guessed, let the player know they won by
-    // changing the value of "wins" to 1 and so forth.
-        // else, if the player did not get the correct letter, drop letters guessed by 1
-        // until the remaining has hit 0 and then tell the user that they lost by changing
-        // losses to 1 //
-
-// 1 - we need to start by creating an array of letters that can be picked  // Done!
-
-// 2 - we need to do a math.random to pull the letter // Done!
-
-// 3 - when the user guesses .onKeyUp push the event into lettersGuessed 
+            // Things to completed //
+        // 1) make the game reset after a win or loss auto
+        // 2) dont allow the user to guess the same letter more then once.
 
 
-// List of all the Variables //
+// possible options for the user to pick from
 var letterOptions = ["a", "b", "c", "d", "e", "f", "g", "h", "I", "j", "k", "l", "m",
                     "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
+// all the keys in the game that can be used
 var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "I", "j", "k", "l", "m",
                 "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
+// These are starting variables but will be changed when the user plays
 var lettersGuessed = [];
 var remaining = 9;
 var wins = 0;
@@ -33,38 +25,71 @@ var lossesText = document.getElementById("losses");
 var remainingText = document.getElementById("remainingGuess");
 var guessesText = document.getElementById("guesses-already");
 
+
+// a function we will create that will reset the game as well as store the data that is needed for the game to run before the user
+// touches a key
+function startGame() {
+
+remaining = 9;
+lettersGuessed = [];
+
+}
+
 // Getting a random Letter from LetterOptions [Array] //
 var randomLetter = Math.floor(Math.random() * letterOptions.length);
 
 // storing the random letter in randomOption //
 var randomOption = letterOptions[randomLetter];
-// console.log(randomOption);
+
+//console.log is just showing us what the random letter is
+console.log(randomOption);
+
+// the text that will display before the user takes their first guess
+winsText.textContent = "Wins: " + wins;
+lossesText.textContent = "Losses: " + losses;
+remainingText.textContent = "Remaining: " + remaining;
 
 
+// the function that will run when the user lets their finger off a key
 document.onkeyup = function(event) {
+
+    // storing the key the user pressed to a variable (userGuess) && making the text change to lower case
     var userGuess = event.key.toLowerCase();
 
+    // checking to see if the userGuess is stored in our alphabet array
    if (alphabet.includes(userGuess)) {
+
+        // if the lettersGuesses includes the usersGuess make it false (we dont want the user to guess the same letter twice)
        if (lettersGuessed.includes(userGuess) === false) {
+
+        // run the below code if the usersGuess is already been guessed
            lettersGuessed.push(userGuess)
        }
-       // Wins goes up if you guess it correctly
+ 
+    
        if (randomOption.includes(userGuess)) {
+
            wins ++;
-            // console.log("You Win");
+            console.log("You Win");
 
        } else {
-           remaining --;
-        //    console.log("try again");
-       }
-   }
+           remaining--;
+           console.log("try again");
+        }
+      
+        // this makes the losses go up after remaining hits 0
+        if (remaining <= 0) {
+        losses++
+        console.log("you lost")
+        }
 
-
-
+        if (userGuess === randomOption) {
+            wins++
+        }
+       
         winsText.textContent = "Wins: " + wins; 
         lossesText.textContent = "Losses: " + losses;
         remainingText.textContent = "Remaining: " + remaining;
         guessesText.textContent = "Your Guesses so far: " + lettersGuessed;
-
+    }
 }
-
