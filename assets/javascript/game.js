@@ -1,7 +1,3 @@
-
-
-            // Things to completed //
-        // 1) dont allow the user to guess the same letter more then once.
         
 // possible options for the user to pick from
 var letterOptions = ["a", "b", "c", "d", "e", "f", "g", "h", "I", "j", "k", "l", "m",
